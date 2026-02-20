@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Life Cathedral OS - Fixed calendar dates & task adding">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#515E79">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cathedral OS">
+    
+    <title>Cathedral OS · fixed dates</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+<div id="loadingScreen" style="position: fixed; inset: 0px; background: var(--bg-primary); display: none; align-items: center; justify-content: center; z-index: 9999;"><div class="loading-spinner"></div></div>
+
+<!-- Install Prompt -->
+<div id="installPrompt" class="install-prompt" style="display:none;">
+    <span>📱 Install Cathedral</span>
+    <button onclick="app.installPWA()">Install</button>
+    <button class="close-btn" onclick="app.closeInstallPrompt()">✕</button>
+</div>
+
+<div class="app-container">
+    <nav class="sidebar"><div class="sidebar-items">
+        <button class="sidebar-item active" data-view="flow"><i class="fas fa-stream"></i></button>
+        <button class="sidebar-item" data-view="calendar"><i class="fas fa-calendar"></i></button>
+        <button class="sidebar-item" data-view="data"><i class="fas fa-database"></i></button>
+    </div></nav>
+    
+    <header class="header">
+        <div class="date-display" id="currentDate">Fri, Feb 20</div>
+        <button class="icon-btn" id="themeToggle"><i class="fas fa-sun"></i></button>
+    </header>
+    
+    <main class="main-content">
+        <!-- flow view -->
+        <div id="flowView" class="view-container active">
+            <div class="time-grid" id="timeGrid"></div>
+        </div>
+        
+        <!-- calendar view -->
+        <div id="calendarView" class="view-container">
+            <div class="calendar-header">
+                <div class="month-nav">
+                    <button class="icon-btn" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <div class="month-year" id="monthYear"></div>
+                    <button class="icon-btn" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <button class="btn btn-small" id="todayCalendarBtn">Today</button>
+            </div>
+            <div class="calendar-grid">
+                <div class="weekdays">
+                    <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div>
+                    <div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
+                </div>
+                <div class="calendar-days" id="calendarDays"></div>
+            </div>
+        </div>
+        
+        <!-- notes view -->
+        <div id="dataView" class="view-container">
+            <div class="data-section">
+                <div class="section-header">
+                    <div class="section-title"><i class="fas fa-sticky-note"></i><span>Notes</span></div>
+                    <button class="btn btn-small" id="addNoteBtn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="notes-list" id="notesList"></div>
+            </div>
+        </div>
+    </main>
+    
+    <nav class="bottom-nav">
+        <div class="bottom-nav-items">
+            <button class="nav-item active" data-view="flow"><i class="fas fa-stream"></i><span>Flow</span></button>
+            <button class="nav-item" data-view="calendar"><i class="fas fa-calendar"></i><span>Calendar</span></button>
+            <button class="nav-item" data-view="data"><i class="fas fa-database"></i><span>Notes</span></button>
+        </div>
+    </nav>
+    
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle"></div>
+                <button class="icon-btn" id="closeModalBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-actions" id="modalActions"></div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+</div>
+
+<!-- External JavaScript -->
+<script src="app.js"></script>
+</body>
+</html>
